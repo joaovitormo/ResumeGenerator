@@ -33,34 +33,50 @@ class PdfGenerator {
             document.add(Paragraph("Cidade: ${resume.city}"))
             document.add(Paragraph("Resumo: ${resume.summary}").setItalic())
 
-            // Adicionando seções de listas
-            document.add(Paragraph("Experiências:"))
-            val experienceList = PdfList()
-            resume.experiences.forEach {
-                experienceList.add(ListItem(it))
+            // Adiciona resumo
+            if (resume.summary.isNotEmpty()) {
+                document.add(Paragraph("Summary"))
+                document.add(Paragraph(resume.summary))
             }
-            document.add(experienceList)
 
-            document.add(Paragraph("Educação:"))
-            val educationList = PdfList()
-            resume.education.forEach {
-                educationList.add(ListItem(it))
+            // Adiciona Experiências
+            if (resume.experiences.isNotEmpty()) {
+                document.add(Paragraph("Experiences"))
+                resume.experiences.forEach { experience ->
+                    document.add(Paragraph("Job Title: ${experience.jobTitle}"))
+                    document.add(Paragraph("Company: ${experience.company}"))
+                    document.add(Paragraph("Start Date: ${experience.startDate}"))
+                    document.add(Paragraph("End Date: ${experience.endDate ?: "Present"}"))
+                    document.add(Paragraph("Description: ${experience.description}"))
+                }
             }
-            document.add(educationList)
 
-            document.add(Paragraph("Habilidades:"))
-            val skillsList = PdfList()
-            resume.skills.forEach {
-                skillsList.add(ListItem(it))
+            // Adiciona Educação
+            if (resume.education.isNotEmpty()) {
+                document.add(Paragraph("Education"))
+                resume.education.forEach { education ->
+                    document.add(Paragraph("Institution: ${education.institution}"))
+                    document.add(Paragraph("Degree: ${education.degree}"))
+                    document.add(Paragraph("Start Year: ${education.startYear}"))
+                    document.add(Paragraph("End Year: ${education.endYear ?: "Present"}"))
+                }
             }
-            document.add(skillsList)
 
-            document.add(Paragraph("Idiomas:"))
-            val languagesList = PdfList()
-            resume.languages.forEach {
-                languagesList.add(ListItem(it))
+            // Adiciona Habilidades
+            if (resume.skills.isNotEmpty()) {
+                document.add(Paragraph("Skills"))
+                resume.skills.forEach { skill ->
+                    document.add(Paragraph("${skill.name} - ${skill.level}"))
+                }
             }
-            document.add(languagesList)
+
+            // Adiciona Idiomas
+            if (resume.languages.isNotEmpty()) {
+                document.add(Paragraph("Languages"))
+                resume.languages.forEach { language ->
+                    document.add(Paragraph("${language.name} - ${language.proficiency}"))
+                }
+            }
 
             document.close()
 

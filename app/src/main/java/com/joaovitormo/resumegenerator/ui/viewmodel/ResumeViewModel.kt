@@ -7,6 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.joaovitormo.resumegenerator.data.model.Resume
 import com.joaovitormo.resumegenerator.data.PdfGenerator
+import com.joaovitormo.resumegenerator.data.model.Education
+import com.joaovitormo.resumegenerator.data.model.Experience
+import com.joaovitormo.resumegenerator.data.model.Language
+import com.joaovitormo.resumegenerator.data.model.Skill
 
 
 class ResumeViewModel : ViewModel() {
@@ -56,52 +60,150 @@ class ResumeViewModel : ViewModel() {
     // Funções para adicionar itens às listas
     fun addExperience() {
         val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
-        updatedList.add("") // Adiciona uma experiência vazia
+        updatedList.add(Experience("", "", "", null, ""))
         _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
     }
 
     fun addEducation() {
         val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
-        updatedList.add("") // Adiciona uma formação vazia
+        updatedList.add(Education("", "", "", ""))
         _resumeState.value = _resumeState.value?.copy(education = updatedList)
     }
 
     fun addSkill() {
         val updatedList = _resumeState.value?.skills?.toMutableList() ?: mutableListOf()
-        updatedList.add("") // Adiciona uma habilidade vazia
+        updatedList.add(Skill("", ""))
         _resumeState.value = _resumeState.value?.copy(skills = updatedList)
     }
 
     fun addLanguage() {
         val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
-        updatedList.add("") // Adiciona um idioma vazio
+        updatedList.add(Language("", ""))
         _resumeState.value = _resumeState.value?.copy(languages = updatedList)
     }
 
     // Funções para atualizar itens nas listas
-    fun onExperienceChange(index: Int, newExperience: String) {
+
+    fun onExperienceChange(index: Int, updatedExperience: Experience) {
         val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
-        updatedList[index] = newExperience
+        updatedList[index] = updatedExperience
         _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
     }
 
-    fun onEducationChange(index: Int, newEducation: String) {
+    fun onEducationChange(index: Int, updatedEducation: Education) {
         val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
-        updatedList[index] = newEducation
+        updatedList[index] = updatedEducation
         _resumeState.value = _resumeState.value?.copy(education = updatedList)
     }
 
-    fun onSkillChange(index: Int, newSkill: String) {
+    fun onSkillChange(index: Int, updatedSkill: Skill) {
         val updatedList = _resumeState.value?.skills?.toMutableList() ?: mutableListOf()
-        updatedList[index] = newSkill
+        updatedList[index] = updatedSkill
         _resumeState.value = _resumeState.value?.copy(skills = updatedList)
     }
 
-    fun onLanguageChange(index: Int, newLanguage: String) {
+    fun onLanguageChange(index: Int, updatedLanguage: Language) {
         val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
-        updatedList[index] = newLanguage
+        updatedList[index] = updatedLanguage
         _resumeState.value = _resumeState.value?.copy(languages = updatedList)
     }
+
+    // Funções para atualizar campos dentro de uma experiência específica
+
+    fun onExperienceJobTitleChange(index: Int, newJobTitle: String) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        val experience = updatedList.getOrNull(index) ?: return
+        updatedList[index] = experience.copy(jobTitle = newJobTitle)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
+    fun onExperienceCompanyChange(index: Int, newCompany: String) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        val experience = updatedList.getOrNull(index) ?: return
+        updatedList[index] = experience.copy(company = newCompany)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
+    fun onExperienceStartDateChange(index: Int, newStartDate: String) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        val experience = updatedList.getOrNull(index) ?: return
+        updatedList[index] = experience.copy(startDate = newStartDate)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
+    fun onExperienceEndDateChange(index: Int, newEndDate: String?) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        val experience = updatedList.getOrNull(index) ?: return
+        updatedList[index] = experience.copy(endDate = newEndDate)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
+    fun onExperienceDescriptionChange(index: Int, newDescription: String) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        val experience = updatedList.getOrNull(index) ?: return
+        updatedList[index] = experience.copy(description = newDescription)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
+    //Education
+    fun onEducationInstitutionChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
+        val education = updatedList.getOrNull(index) ?: return
+        updatedList[index] = education.copy(institution = newText)
+        _resumeState.value = _resumeState.value?.copy(education = updatedList)
+    }
+
+    fun onEducationDegreeChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
+        val education = updatedList.getOrNull(index) ?: return
+        updatedList[index] = education.copy(degree = newText)
+        _resumeState.value = _resumeState.value?.copy(education = updatedList)
+    }
+
+    fun onEducationStartYearChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
+        val education = updatedList.getOrNull(index) ?: return
+        updatedList[index] = education.copy(startYear = newText)
+        _resumeState.value = _resumeState.value?.copy(education = updatedList)
+    }
+
+    fun onEducationEndYearChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
+        val education = updatedList.getOrNull(index) ?: return
+        updatedList[index] = education.copy(endYear = newText)
+        _resumeState.value = _resumeState.value?.copy(education = updatedList)
+    }
+
+    //Skill
+    fun onSkillNameChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.skills?.toMutableList() ?: mutableListOf()
+        val skills = updatedList.getOrNull(index) ?: return
+        updatedList[index] = skills.copy(name = newText)
+        _resumeState.value = _resumeState.value?.copy(skills = updatedList)
+    }
+
+    fun onSkillLevelChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.skills?.toMutableList() ?: mutableListOf()
+        val skills = updatedList.getOrNull(index) ?: return
+        updatedList[index] = skills.copy(level = newText)
+        _resumeState.value = _resumeState.value?.copy(skills = updatedList)
+    }
+
+    //Language
+    fun onLanguageNameChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
+        val languages = updatedList.getOrNull(index) ?: return
+        updatedList[index] = languages.copy(name = newText)
+        _resumeState.value = _resumeState.value?.copy(languages = updatedList)
+    }
+
+    fun onLanguageProficiencyChange(index: Int, newText: String) {
+        val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
+        val languages = updatedList.getOrNull(index) ?: return
+        updatedList[index] = languages.copy(proficiency = newText)
+        _resumeState.value = _resumeState.value?.copy(languages = updatedList)
+    }
+
 
     // Função para gerar o PDF
     fun generatePDF(context: Context) {

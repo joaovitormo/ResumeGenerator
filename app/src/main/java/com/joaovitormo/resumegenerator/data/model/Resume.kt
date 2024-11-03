@@ -7,9 +7,9 @@ data class Resume(
     var phone: String,
     var city: String,
     var summary: String,
-    val experiences: List<String>,
-    val education: List<String>,
-    val skills: List<String>,
-    val languages: List<String>
+    val experiences: List<Experience>,
+    val education: List<Education>,
+    val skills: List<Skill>,
+    val languages: List<Language>
 )
 
