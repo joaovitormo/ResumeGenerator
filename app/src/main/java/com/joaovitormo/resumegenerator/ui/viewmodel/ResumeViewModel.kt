@@ -32,6 +32,8 @@ class ResumeViewModel : ViewModel() {
 
     private val pdfGenerator = PdfGenerator()
 
+
+
     // Funções para atualizar campos individuais
     fun onNameChange(newName: String) {
         _resumeState.value = _resumeState.value?.copy(name = newName)
@@ -64,9 +66,21 @@ class ResumeViewModel : ViewModel() {
         _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
     }
 
+    fun deleteExperience(experience: Experience) {
+        val updatedList = _resumeState.value?.experiences?.toMutableList() ?: mutableListOf()
+        updatedList.remove(experience)
+        _resumeState.value = _resumeState.value?.copy(experiences = updatedList)
+    }
+
     fun addEducation() {
         val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
         updatedList.add(Education("", "", "", ""))
+        _resumeState.value = _resumeState.value?.copy(education = updatedList)
+    }
+
+    fun deleteEducation(education: Education) {
+        val updatedList = _resumeState.value?.education?.toMutableList() ?: mutableListOf()
+        updatedList.remove(education)
         _resumeState.value = _resumeState.value?.copy(education = updatedList)
     }
 
@@ -76,11 +90,25 @@ class ResumeViewModel : ViewModel() {
         _resumeState.value = _resumeState.value?.copy(skills = updatedList)
     }
 
+    fun deleteSkill(skill: Skill) {
+        val updatedList = _resumeState.value?.skills?.toMutableList() ?: mutableListOf()
+        updatedList.remove(skill)
+        _resumeState.value = _resumeState.value?.copy(skills = updatedList)
+    }
+
     fun addLanguage() {
         val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
         updatedList.add(Language("", ""))
         _resumeState.value = _resumeState.value?.copy(languages = updatedList)
     }
+
+    fun deleteLanguage(language: Language) {
+        val updatedList = _resumeState.value?.languages?.toMutableList() ?: mutableListOf()
+        updatedList.remove(language)
+        _resumeState.value = _resumeState.value?.copy(languages = updatedList)
+    }
+
+
 
     // Funções para atualizar itens nas listas
 

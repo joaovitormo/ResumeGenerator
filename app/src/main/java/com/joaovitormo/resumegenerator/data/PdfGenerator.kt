@@ -7,6 +7,7 @@ import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.ListItem
 import com.itextpdf.layout.element.Paragraph
+import com.itextpdf.layout.element.Text
 import com.joaovitormo.resumegenerator.data.model.Resume
 import java.io.File
 import java.io.FileOutputStream
@@ -25,13 +26,28 @@ class PdfGenerator {
             val pdfDocument = com.itextpdf.kernel.pdf.PdfDocument(writer)
             val document = Document(pdfDocument)
 
-            // Adicionando dados ao PDF
-            document.add(Paragraph("${resume.name}").setBold())
-            document.add(Paragraph("Cargo: ${resume.jobTitle}"))
-            document.add(Paragraph("Email: ${resume.email}"))
-            document.add(Paragraph("Telefone: ${resume.phone}"))
-            document.add(Paragraph("Cidade: ${resume.city}"))
-            document.add(Paragraph("Resumo: ${resume.summary}").setItalic())
+            // Cria um único Paragraph
+            val paragraph = Paragraph().setFixedLeading(12f) // Ajusta o espaçamento entre linhas
+
+// Adiciona diferentes partes do conteúdo como Text, com formatação personalizada
+            val nameText = Text("${resume.name}\n").setBold().setFontSize(14f)
+            val jobTitleText = Text("Cargo: ${resume.jobTitle}\n")
+            val emailText = Text("Email: ${resume.email}\n")
+            val phoneText = Text("Telefone: ${resume.phone}\n")
+            val cityText = Text("Cidade: ${resume.city}\n")
+            val summaryText = Text("Resumo: ${resume.summary}").setItalic()
+
+// Adiciona cada Text ao Paragraph
+            paragraph.add(nameText)
+            paragraph.add(jobTitleText)
+            paragraph.add(emailText)
+            paragraph.add(phoneText)
+            paragraph.add(cityText)
+            paragraph.add(summaryText)
+
+// Adiciona o Paragraph ao documento
+            document.add(paragraph)
+
 
             // Adiciona resumo
             if (resume.summary.isNotEmpty()) {
